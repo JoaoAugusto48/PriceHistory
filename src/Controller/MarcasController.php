@@ -2,33 +2,28 @@
 
 namespace App\Controller;
 
-use App\Entity\Marcas;
+use App\DTO\SaveMarcasDTO;
 use App\Mapper\MarcasMapper;
-use App\Repository\MarcasRepository;
+use App\Service\MarcasService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-
-use function PHPSTORM_META\map;
 
 #[Route('/api')]
 final class MarcasController extends AbstractController
 {
 
     public function __construct(
-        private MarcasRepository $marcasRepository,
+        private MarcasService $marcasService,
         private EntityManagerInterface $entityManager,
-        private ValidatorInterface $validator
-    ) {
-    }
+    ) {}
 
     #[Route('/marcas', name: 'app_marcas', methods: ['GET'])]
     public function marcasList(Request $request): JsonResponse
     {
-        $marcasList = $this->marcasRepository->findAll();
+        $marcasList = $this->marcasService->findByFilters();
         $data = [];
 
         foreach ($marcasList as $marca ) {
@@ -41,7 +36,7 @@ final class MarcasController extends AbstractController
     #[Route('/marcas/{id}', name: 'app_marcas_id', methods: ['GET'])]
     public function marcaById(int $id, Request $request): JsonResponse
     {
-        $marca = $this->marcasRepository->find($id);
+        $marca = $this->marcasService->findById($id);
 
         if(!$marca) {
             return new JsonResponse(['error' => 'Marca não encontrada'], 404);
@@ -55,23 +50,20 @@ final class MarcasController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
-        $marca = new Marcas();
-        $marca->setName($data['name'] ?? '');
-        $marca->setDescription($data['description'] ?? '');
-
-        // validação
-        $errors = $this->validator->validate($marca);
-        if(count($errors) > 0) {
-            return new JsonResponse($errors, 400);
-        }
+        $marcaDto = new SaveMarcasDTO(
+            $data['name'] ?? null,
+            $data['description'] ?? null
+        );
 
         try {
-            // Persistencia
-            $this->marcasRepository->save($marca, true);
+            $marca = $this->marcasService->create($marcaDto, true);
 
             return new JsonResponse(MarcasMapper::toDTO($marca), 201);
+        } catch (\InvalidArgumentException $e) {
 
+            return new JsonResponse(['error' => $e->getMessage()], 400);
         } catch (\Throwable $th) {
+
             return new JsonResponse(['error' => 'Não foi possível salvar o dado.'], 500);
         }
     }
@@ -85,21 +77,14 @@ final class MarcasController extends AbstractController
             return new JsonResponse(['error' => 'Marca não encontrada'], 404);
         }
 
-        $marca = $this->marcasRepository->find($id);
-        $marca->setName($data['name'] ?? $marca->getName());
-        $marca->setDescription($data['description'] ?? $marca->getDescription());
-
-        $errors = $this->validator->validate($marca);
-        if (count($errors) > 0) {
-            $errorMessages = [];
-            foreach ($errors as $error) {
-                $errorMessages[$error->getPropertyPath()] = $error->getMessage();
-            }
-            return new JsonResponse(['errors' => $errorMessages], 400);
-        }
+        $marcaDto = new SaveMarcasDTO(
+            $data['name'] ?? null,
+            $data['description'] ?? null,
+            $id,
+        );
 
         try {
-            $this->marcasRepository->save($marca, true);
+            $marca = $this->marcasService->update($marcaDto);
 
             return new JsonResponse(MarcasMapper::toDTO($marca), 200);
         } catch (\Throwable $th) {
@@ -110,16 +95,10 @@ final class MarcasController extends AbstractController
     #[Route('/marcas/{id}/delete', name: 'app_delete_marcas', methods: ['DELETE'])]
     public function deleteMarcas(int $id, Request $request): JsonResponse
     {
-        $data = $this->marcasRepository->find($id);
-
-        if (!$data) {
-            return new JsonResponse(['error' => 'Marca não encontrada'], 404);
-        }
-
         try {
-            $this->marcasRepository->remove($data, true);
+            $this->marcasService->remove($id);
 
-            return new JsonResponse(['status' => 'Marca removida com sucesso!'], 200);
+            return new JsonResponse(null, 204);
         } catch (\Throwable $th) {
             return new JsonResponse(['error' => 'Não foi possível remover o dado.'], 500);
         }

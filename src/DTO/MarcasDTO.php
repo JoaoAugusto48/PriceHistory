@@ -2,8 +2,6 @@
 
 namespace App\DTO;
 
-use DateTime;
-
 class MarcasDTO
 {
     public function __construct(

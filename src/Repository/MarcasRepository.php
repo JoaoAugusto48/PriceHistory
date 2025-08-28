@@ -39,12 +39,6 @@ class MarcasRepository extends ServiceEntityRepository
         }
     }
 
-    public function removeById(int $id): void
-    {
-        $Marcass = $this->getEntityManager()->getReference(Marcas::class, $id);
-        $this->remove($Marcass, true);
-    }
-
     //    /**
     //     * @return Marcas[] Returns an array of Marcas objects
     //     */

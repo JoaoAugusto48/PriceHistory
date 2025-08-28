@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\MarcasRepository;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -21,7 +20,7 @@ class Marcas
     private string $name;
 
     #[ORM\Column]
-    #[Assert\Blank]
+    #[Assert\Length(max: 255)]
     private ?string $description = null;
 
     public function __construct(string $name = '', string $description = '') {
