@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategoriasRepository::class)]
-class Categorias
+class Categorias extends TimestampsEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MarcasRepository::class)]
-class Marcas
+class Marcas extends TimestampsEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,7 +23,8 @@ class Marcas
     #[Assert\Length(max: 255)]
     private ?string $description = null;
 
-    public function __construct(string $name = '', string $description = '') {
+    public function __construct(string $name = '', string $description = '')
+    {
         $this->name = $name;
         $this->description = $description;
     }

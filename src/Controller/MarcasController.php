@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\DTO\SaveMarcasDTO;
 use App\Mapper\MarcasMapper;
 use App\Service\MarcasService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +16,6 @@ final class MarcasController extends AbstractController
 
     public function __construct(
         private MarcasService $marcasService,
-        private EntityManagerInterface $entityManager,
     ) {}
 
     #[Route('/marcas', name: 'app_marcas', methods: ['GET'])]
@@ -42,7 +40,7 @@ final class MarcasController extends AbstractController
             return new JsonResponse(['error' => 'Marca não encontrada'], 404);
         }
 
-        return new JsonResponse(MarcasMapper::toDTO($marca),);
+        return new JsonResponse(MarcasMapper::toDTO($marca), 200);
     }
 
     #[Route('/marcas/create', name: 'app_add_marcas', methods: ['POST'])]

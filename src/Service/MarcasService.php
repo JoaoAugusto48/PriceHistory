@@ -24,6 +24,7 @@ class MarcasService
 
     /**
      * Mostra todos
+     * @return Marcas[]
      */
     public function findByFilters(
         ?string $name = null,
