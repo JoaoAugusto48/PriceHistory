@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MarcasRepository::class)]
-class Marcas extends TimestampsEntity
+class Marcas extends BaseEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
