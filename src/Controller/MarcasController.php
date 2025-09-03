@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/api')]
+#[Route('/api/marcas')]
 final class MarcasController extends AbstractController
 {
 
@@ -18,7 +18,7 @@ final class MarcasController extends AbstractController
         private MarcasService $marcasService,
     ) {}
 
-    #[Route('/marcas', name: 'app_marcas', methods: ['GET'])]
+    #[Route('', name: 'app_marcas', methods: ['GET'])]
     public function marcasList(Request $request): JsonResponse
     {
         $marcasList = $this->marcasService->findByFilters();
@@ -31,7 +31,7 @@ final class MarcasController extends AbstractController
         return new JsonResponse($data);
     }
 
-    #[Route('/marcas/{id}', name: 'app_marcas_id', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_marcas_id', methods: ['GET'])]
     public function marcaById(int $id, Request $request): JsonResponse
     {
         $marca = $this->marcasService->findById($id);
@@ -43,7 +43,7 @@ final class MarcasController extends AbstractController
         return new JsonResponse(MarcasMapper::toDTO($marca), 200);
     }
 
-    #[Route('/marcas/create', name: 'app_add_marcas', methods: ['POST'])]
+    #[Route('/create', name: 'app_add_marcas', methods: ['POST'])]
     public function createMarcas(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -66,7 +66,7 @@ final class MarcasController extends AbstractController
         }
     }
 
-    #[Route('/marcas/{id}/update', name: 'app_edit_marcas', methods: ['PUT'])]
+    #[Route('/{id}/update', name: 'app_edit_marcas', methods: ['PUT'])]
     public function editMarcas(int $id, Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -90,11 +90,11 @@ final class MarcasController extends AbstractController
         }
     }
 
-    #[Route('/marcas/{id}/delete', name: 'app_delete_marcas', methods: ['DELETE'])]
+    #[Route('/{id}/delete', name: 'app_delete_marcas', methods: ['DELETE'])]
     public function deleteMarcas(int $id, Request $request): JsonResponse
     {
         try {
-            $this->marcasService->remove($id);
+            $this->marcasService->delete($id);
 
             return new JsonResponse(null, 204);
         } catch (\Throwable $th) {

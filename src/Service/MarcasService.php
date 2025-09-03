@@ -15,7 +15,9 @@ class MarcasService
     ) {}
 
     /**
-     * Busca pelo ID
+     * Summary of findById
+     * @param int $id
+     * @return Marcas|null
      */
     public function findById(int $id): ?Marcas
     {
@@ -23,7 +25,12 @@ class MarcasService
     }
 
     /**
-     * Mostra todos
+     * Summary of findByFilters
+     * @param mixed $name
+     * @param int $limit
+     * @param int $offset
+     * @param string $orderBy
+     * @param string $direction
      * @return Marcas[]
      */
     public function findByFilters(
@@ -44,7 +51,11 @@ class MarcasService
     }
 
     /**
-     * Salva uma Marca
+     * Summary of create
+     * @param \App\DTO\SaveMarcasDTO $dto
+     * @param bool $flush
+     * @throws \InvalidArgumentException
+     * @return Marcas
      */
     public function create(SaveMarcasDTO $dto, bool $flush = true): Marcas
     {
@@ -63,7 +74,11 @@ class MarcasService
     }
 
     /**
-     * Atualiza uma Marca
+     * Summary of update
+     * @param \App\DTO\SaveMarcasDTO $dto
+     * @param bool $flush
+     * @throws \InvalidArgumentException
+     * @return Marcas|null
      */
     public function update(SaveMarcasDTO $dto, bool $flush = true): Marcas
     {
@@ -82,10 +97,14 @@ class MarcasService
     }
 
     /**
-     * Remove uma marca
+     * Summary of delete
+     * @param int $id
+     * @param bool $flush
+     * @throws \InvalidArgumentException
+     * @return void
      */
-    public function remove(int $id, bool $flush = true) {
-
+    public function delete(int $id, bool $flush = true): void
+    {
         $marca = $this->marcasRepository->find($id);
 
         if(!$marca) {

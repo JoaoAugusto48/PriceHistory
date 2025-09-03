@@ -9,11 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: CategoriasRepository::class)]
 class Categorias extends BaseEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column]
     #[Assert\NotBlank]
     private string $name;
@@ -21,11 +16,6 @@ class Categorias extends BaseEntity
     public function __construct(string $name = '')
     {
         $this->name = $name;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getName(): string
