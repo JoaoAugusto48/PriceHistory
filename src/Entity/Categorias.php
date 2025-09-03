@@ -11,6 +11,7 @@ class Categorias extends BaseEntity
 {
     #[ORM\Column]
     #[Assert\NotBlank]
+    #[Assert\Length(min: 2)]
     private string $name;
 
     public function __construct(string $name = '')

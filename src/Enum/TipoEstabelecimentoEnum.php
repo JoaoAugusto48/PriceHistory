@@ -6,5 +6,4 @@ enum TipoEstabelecimentoEnum: string
 {
     case Fisico = 'fisico';
     case Online = 'online';
-    case Misto = 'misto';
 }
