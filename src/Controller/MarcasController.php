@@ -18,6 +18,11 @@ final class MarcasController extends AbstractController
         private MarcasService $marcasService,
     ) {}
 
+    /**
+     * Summary of marcasList
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
+     */
     #[Route('', name: 'app_marcas', methods: ['GET'])]
     public function marcasList(Request $request): JsonResponse
     {
@@ -31,6 +36,12 @@ final class MarcasController extends AbstractController
         return new JsonResponse($data);
     }
 
+    /**
+     * Summary of marcaById
+     * @param int $id
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
+     */
     #[Route('/{id}', name: 'app_marcas_id', methods: ['GET'])]
     public function marcaById(int $id, Request $request): JsonResponse
     {
@@ -43,6 +54,11 @@ final class MarcasController extends AbstractController
         return new JsonResponse(MarcasMapper::toDTO($marca), 200);
     }
 
+    /**
+     * Summary of createMarcas
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
+     */
     #[Route('/create', name: 'app_add_marcas', methods: ['POST'])]
     public function createMarcas(Request $request): JsonResponse
     {
@@ -66,6 +82,12 @@ final class MarcasController extends AbstractController
         }
     }
 
+    /**
+     * Summary of editMarcas
+     * @param int $id
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
+     */
     #[Route('/{id}/update', name: 'app_edit_marcas', methods: ['PUT'])]
     public function editMarcas(int $id, Request $request): JsonResponse
     {
@@ -90,6 +112,12 @@ final class MarcasController extends AbstractController
         }
     }
 
+    /**
+     * Summary of deleteMarcas
+     * @param int $id
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
+     */
     #[Route('/{id}/delete', name: 'app_delete_marcas', methods: ['DELETE'])]
     public function deleteMarcas(int $id, Request $request): JsonResponse
     {

@@ -21,7 +21,7 @@ class MarcasRepository extends ServiceEntityRepository
         parent::__construct($registry, Marcas::class);
     }
 
-    public function save(Marcas $entity, bool $flush=false): void
+    public function save(Marcas $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class MarcasRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Marcas $entity, $flush=false): void
+    public function remove(Marcas $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 

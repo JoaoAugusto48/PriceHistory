@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class MarcasService
 {
     public function __construct(
-        private MarcasRepository $marcasRepository,
+        private MarcasRepository $repository,
         private ValidatorInterface $validator
     ) {}
 
@@ -21,7 +21,7 @@ class MarcasService
      */
     public function findById(int $id): ?Marcas
     {
-        return $this->marcasRepository->find($id);
+        return $this->repository->find($id);
     }
 
     /**
@@ -40,7 +40,7 @@ class MarcasService
         string $orderBy = 'id',
         string $direction = 'ASC'
     ): array {
-        return $this->marcasRepository->findBy(
+        return $this->repository->findBy(
             array_filter([
                 'name' => $name
             ]),
@@ -68,7 +68,7 @@ class MarcasService
             throw new \InvalidArgumentException((string) $errors);
         }
 
-        $this->marcasRepository->save($marca, $flush);
+        $this->repository->save($marca, $flush);
 
         return $marca;
     }
@@ -82,7 +82,7 @@ class MarcasService
      */
     public function update(SaveMarcasDTO $dto, bool $flush = true): Marcas
     {
-        $marca = $this->marcasRepository->find($dto->id);
+        $marca = $this->repository->find($dto->id);
         $marca->setName($dto->name ?? $marca->getName());
         $marca->setDescription($dto->description ?? $marca->getDescription());
 
@@ -91,7 +91,7 @@ class MarcasService
             throw new \InvalidArgumentException((string) $errors);
         }
 
-        $this->marcasRepository->save($marca, $flush);
+        $this->repository->save($marca, $flush);
 
         return $marca;
     }
@@ -105,12 +105,12 @@ class MarcasService
      */
     public function delete(int $id, bool $flush = true): void
     {
-        $marca = $this->marcasRepository->find($id);
+        $marca = $this->repository->find($id);
 
         if(!$marca) {
             throw new \InvalidArgumentException('Marca não encontrada');
         }
 
-        $this->marcasRepository->remove($marca, $flush);
+        $this->repository->remove($marca, $flush);
     }
 }

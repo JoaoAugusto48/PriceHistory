@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\DTO\CategoriasDTO;
 use App\DTO\SaveCategoriasDTO;
 use App\Entity\Categorias;
 use App\Repository\CategoriasRepository;
@@ -12,7 +11,7 @@ class CategoriasService
 {
 
     public function __construct(
-        private CategoriasRepository $categoriasRepository,
+        private CategoriasRepository $repository,
         private ValidatorInterface $validator
     ) {}
 
@@ -23,7 +22,7 @@ class CategoriasService
      */
     public function findById(int $id): ?Categorias
     {
-        return $this->categoriasRepository->find($id);
+        return $this->repository->find($id);
     }
 
     /**
@@ -42,7 +41,7 @@ class CategoriasService
         string $orderBy = 'id',
         string $direction = 'ASC'
     ): array {
-        return $this->categoriasRepository->findBy(
+        return $this->repository->findBy(
             array_filter(['name' => $name]),
             [$orderBy => $direction],
             $limit,
@@ -67,7 +66,7 @@ class CategoriasService
             throw new \InvalidArgumentException((string) $errors);
         }
 
-        $this->categoriasRepository->save($categoria, $flush);
+        $this->repository->save($categoria, $flush);
 
         return $categoria;
     }
@@ -81,7 +80,7 @@ class CategoriasService
      */
     public function update(SaveCategoriasDTO $dto, bool $flush = true): Categorias
     {
-        $categoria = $this->categoriasRepository->find($dto->id);
+        $categoria = $this->repository->find($dto->id);
         $categoria->setName($dto->name ?? $categoria->getName());
 
         $errors = $this->validator->validate($categoria);
@@ -89,7 +88,7 @@ class CategoriasService
             throw new \InvalidArgumentException((string) $errors);
         }
 
-        $this->categoriasRepository->save($categoria, $flush);
+        $this->repository->save($categoria, $flush);
 
         return $categoria;
     }
@@ -103,13 +102,13 @@ class CategoriasService
      */
     public function delete(int $id, bool $flush = true): void
     {
-        $categoria = $this->categoriasRepository->find($id);
+        $categoria = $this->repository->find($id);
 
         if(!$categoria) {
             throw new \InvalidArgumentException('Categoria não encontrada');
         }
 
-        $this->categoriasRepository->remove($categoria, $flush);
+        $this->repository->remove($categoria, $flush);
     }
 
 }
