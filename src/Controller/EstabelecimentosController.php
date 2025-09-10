@@ -79,7 +79,38 @@ final class EstabelecimentosController extends AbstractController
         try {
             $estabelecimento = $this->estabelecimentosService->create($estabelecimentoDto);
 
-            return new JsonResponse($estabelecimento, 201);
+            return new JsonResponse(EstabelecimentosMapper::toDto($estabelecimento), 201);
+        } catch (\Throwable $th) {
+            return new JsonResponse(['error' => $th->getMessage()], 400);
+        }
+    }
+
+    /**
+     * Summary of updateEstabelecimentos
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
+     */
+    #[Route('/{id}/update', name: 'app_estabelecimento_update', methods: ['PUT'])]
+    public function updateEstabelecimentos(int $id, Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $estabelecimentoDto = new SaveEstabelecimentosDTO(
+            $data['name'] ?? null,
+            $data['cidade'] ?? null,
+            $data['estado'] ?? null,
+            $data['endereco'] ?? null,
+            $data['cnpj'] ?? null,
+            $data['tipo'] ?? null,
+            $data['url'] ?? null,
+            $data['telefone'] ?? null,
+            $id,
+        );
+
+        try {
+            $estabelecimento = $this->estabelecimentosService->update($estabelecimentoDto);
+
+            return new JsonResponse(EstabelecimentosMapper::toDto($estabelecimento), 201);
         } catch (\Throwable $th) {
             return new JsonResponse(['error' => $th->getMessage()], 400);
         }
