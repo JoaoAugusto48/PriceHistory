@@ -15,6 +15,11 @@ class EstabelecimentosService
         private ValidatorInterface $validator
     ) {}
 
+    /**
+     * Summary of findById
+     * @param int $id
+     * @return object|null
+     */
     public function findById(int $id): ?Estabelecimentos
     {
         return $this->repository->find($id);
@@ -115,5 +120,16 @@ class EstabelecimentosService
 
         $this->repository->save($estabelecimento, $flush);
         return $estabelecimento;
+    }
+
+    public function delete(int $id, bool $flush = true): void
+    {
+        $estabelecimento = $this->repository->find($id);
+
+        if(!$estabelecimento) {
+            throw new \InvalidArgumentException('Estabelecimento não encontrado');
+        }
+
+        $this->repository->remove($estabelecimento, $flush);
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\DTO\SaveEstabelecimentosDTO;
-use App\Entity\Estabelecimentos;
 use App\Mapper\EstabelecimentosMapper;
 use App\Service\EstabelecimentosService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -113,6 +112,24 @@ final class EstabelecimentosController extends AbstractController
             return new JsonResponse(EstabelecimentosMapper::toDto($estabelecimento), 201);
         } catch (\Throwable $th) {
             return new JsonResponse(['error' => $th->getMessage()], 400);
+        }
+    }
+
+    /**
+     * Summary of deleteEstabelecimentos
+     * @param int $id
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
+     */
+    #[Route('/{id}/remove', name: 'app_estabelecimento_remove', methods: ['DELETE'])]
+    public function deleteEstabelecimentos(int $id, Request $request): JsonResponse
+    {
+        try {
+            $this->estabelecimentosService->delete($id);
+
+            return new JsonResponse(null, 204);
+        } catch (\Throwable $th) {
+            return new JsonResponse(['error' => 'Não foi possível remover o dado.'], 500);
         }
     }
 }

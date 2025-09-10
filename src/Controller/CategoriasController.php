@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\DTO\CategoriasDTO;
 use App\DTO\SaveCategoriasDTO;
 use App\Mapper\CategoriasMapper;
 use App\Service\CategoriasService;
