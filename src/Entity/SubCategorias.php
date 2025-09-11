@@ -4,25 +4,23 @@ namespace App\Entity;
 
 use App\Repository\SubCategoriasRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SubCategoriasRepository::class)]
-class SubCategorias
+class SubCategorias extends BaseEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'subCategorias')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Categorias $categoriaId = null;
+    #[Assert\NotBlank]
+    private ?Categorias $categoria = null;
 
-    public function getId(): ?int
+    public function __construct(string $name = '')
     {
-        return $this->id;
+        $this->name = $name;
     }
 
     public function getName(): ?string
@@ -37,14 +35,14 @@ class SubCategorias
         return $this;
     }
 
-    public function getCategoriaId(): ?Categorias
+    public function getCategoria(): ?Categorias
     {
-        return $this->categoriaId;
+        return $this->categoria;
     }
 
-    public function setCategoriaId(?Categorias $categoriaId): static
+    public function setCategoriaId(?Categorias $categoria): static
     {
-        $this->categoriaId = $categoriaId;
+        $this->categoria = $categoria;
 
         return $this;
     }

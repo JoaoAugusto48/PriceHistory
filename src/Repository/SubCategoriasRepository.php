@@ -16,6 +16,24 @@ class SubCategoriasRepository extends ServiceEntityRepository
         parent::__construct($registry, SubCategorias::class);
     }
 
+    public function save(SubCategorias $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(SubCategorias $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if($flush) {
+            $this->getEntityManager()->persist($entity);
+        }
+    }
+
     //    /**
     //     * @return SubCategorias[] Returns an array of SubCategorias objects
     //     */

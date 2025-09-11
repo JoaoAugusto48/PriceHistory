@@ -6,6 +6,7 @@ use App\Repository\CategoriasRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategoriasRepository::class)]
@@ -19,7 +20,8 @@ class Categorias extends BaseEntity
     /**
      * @var Collection<int, SubCategorias>
      */
-    #[ORM\OneToMany(targetEntity: SubCategorias::class, mappedBy: 'categoriaId')]
+    #[ORM\OneToMany(targetEntity: SubCategorias::class, mappedBy: 'categoria')]
+    #[Ignore]
     private Collection $subCategorias;
 
     public function __construct(string $name = '')
@@ -62,7 +64,7 @@ class Categorias extends BaseEntity
     {
         if ($this->subCategorias->removeElement($subCategoria)) {
             // set the owning side to null (unless already changed)
-            if ($subCategoria->getCategoriaId() === $this) {
+            if ($subCategoria->getCategoria() === $this) {
                 $subCategoria->setCategoriaId(null);
             }
         }
