@@ -7,7 +7,7 @@ use App\Entity\Marcas;
 
 class MarcasMapper
 {
-    public static function toDTO(Marcas $marcas): MarcasResponseDTO
+    public static function toResponseDto(Marcas $marcas): MarcasResponseDTO
     {
         return new MarcasResponseDTO(
             $marcas->getId(),

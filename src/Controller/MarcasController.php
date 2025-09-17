@@ -30,7 +30,7 @@ final class MarcasController extends AbstractController
         $data = [];
 
         foreach ($marcasList as $marca ) {
-            $data[] = MarcasMapper::toDTO($marca);
+            $data[] = MarcasMapper::toResponseDto($marca);
         }
 
         return new JsonResponse($data);
@@ -51,7 +51,7 @@ final class MarcasController extends AbstractController
             return new JsonResponse(['error' => 'Marca não encontrada'], 404);
         }
 
-        return new JsonResponse(MarcasMapper::toDTO($marca), 200);
+        return new JsonResponse(MarcasMapper::toResponseDto($marca), 200);
     }
 
     /**
@@ -72,7 +72,7 @@ final class MarcasController extends AbstractController
         try {
             $marca = $this->marcasService->create($marcaDto, true);
 
-            return new JsonResponse(MarcasMapper::toDTO($marca), 201);
+            return new JsonResponse(MarcasMapper::toResponseDto($marca), 201);
         } catch (\InvalidArgumentException $e) {
 
             return new JsonResponse(['error' => $e->getMessage()], 400);
@@ -106,7 +106,7 @@ final class MarcasController extends AbstractController
         try {
             $marca = $this->marcasService->update($marcaDto);
 
-            return new JsonResponse(MarcasMapper::toDTO($marca), 200);
+            return new JsonResponse(MarcasMapper::toResponseDto($marca), 200);
         } catch (\Throwable $th) {
             return new JsonResponse(['error' => 'Não foi possível atualizar o dado.'], 500);
         }

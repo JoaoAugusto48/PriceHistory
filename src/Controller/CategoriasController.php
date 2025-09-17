@@ -30,7 +30,7 @@ final class CategoriasController extends AbstractController
         $data = [];
 
         foreach ($categoriasList as $categoria) {
-            $data[] = CategoriasMapper::toDto($categoria);
+            $data[] = CategoriasMapper::toResponseDto($categoria);
         }
 
         return new JsonResponse($data);
@@ -51,7 +51,7 @@ final class CategoriasController extends AbstractController
             return new JsonResponse(['error' => 'Categoria não encontrada'], 404);
         }
 
-        return new JsonResponse(CategoriasMapper::toDto($categoria), 200);
+        return new JsonResponse(CategoriasMapper::toResponseDto($categoria), 200);
     }
 
     /**
@@ -69,7 +69,7 @@ final class CategoriasController extends AbstractController
         try {
             $categoria = $this->categoriasService->create($categoriaDto, true);
 
-            return new JsonResponse(CategoriasMapper::toDto($categoria), 201);
+            return new JsonResponse(CategoriasMapper::toResponseDto($categoria), 201);
         } catch (\Throwable $th) {
             return new JsonResponse(['error' => $th->getMessage()], 500);
         }
@@ -99,7 +99,7 @@ final class CategoriasController extends AbstractController
         try {
             $categoria = $this->categoriasService->update($categoriaDto);
 
-            return new JsonResponse(CategoriasMapper::toDto($categoria), 200);
+            return new JsonResponse(CategoriasMapper::toResponseDto($categoria), 200);
         } catch (\Throwable $th) {
             return new JsonResponse(['error' => 'Não foi possível atualizar o dado.'], 500);
         }

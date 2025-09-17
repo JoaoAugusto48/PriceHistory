@@ -7,7 +7,7 @@ use App\Entity\Categorias;
 
 class CategoriasMapper
 {
-    public static function toDto(Categorias $categorias): CategoriasResponseDTO
+    public static function toResponseDto(Categorias $categorias): CategoriasResponseDTO
     {
         return new CategoriasResponseDTO(
             $categorias->getId(),

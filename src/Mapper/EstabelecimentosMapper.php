@@ -7,7 +7,7 @@ use App\Entity\Estabelecimentos;
 
 class EstabelecimentosMapper
 {
-    public static function toDto(Estabelecimentos $estabelecimentos): EstabelecimentosResponseDTO
+    public static function toResponseDto(Estabelecimentos $estabelecimentos): EstabelecimentosResponseDTO
     {
         return new EstabelecimentosResponseDTO(
             $estabelecimentos->getId(),

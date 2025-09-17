@@ -30,7 +30,7 @@ final class EstabelecimentosController extends AbstractController
         $data = [];
 
         foreach ($estabelecimentosList as $estabelecimento) {
-            $data[] = EstabelecimentosMapper::toDto($estabelecimento);
+            $data[] = EstabelecimentosMapper::toResponseDto($estabelecimento);
         }
 
         return new JsonResponse($data, 200);
@@ -51,7 +51,7 @@ final class EstabelecimentosController extends AbstractController
             return new JsonResponse(['error' => 'Estabelecimento não encontrado'], 404);
         }
 
-        return new JsonResponse(EstabelecimentosMapper::toDto($estabelecimento), 200);
+        return new JsonResponse(EstabelecimentosMapper::toResponseDto($estabelecimento), 200);
     }
 
     /**
@@ -64,7 +64,7 @@ final class EstabelecimentosController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
-        $estabelecimentoDto = new SaveEstabelecimentosDTO(
+        $estabelecimentoResponseDto = new SaveEstabelecimentosDTO(
             $data['name'] ?? null,
             $data['cidade'] ?? null,
             $data['estado'] ?? null,
@@ -76,9 +76,9 @@ final class EstabelecimentosController extends AbstractController
         );
 
         try {
-            $estabelecimento = $this->estabelecimentosService->create($estabelecimentoDto);
+            $estabelecimento = $this->estabelecimentosService->create($estabelecimentoResponseDto);
 
-            return new JsonResponse(EstabelecimentosMapper::toDto($estabelecimento), 201);
+            return new JsonResponse(EstabelecimentosMapper::toResponseDto($estabelecimento), 201);
         } catch (\Throwable $th) {
             return new JsonResponse(['error' => $th->getMessage()], 400);
         }
@@ -94,7 +94,7 @@ final class EstabelecimentosController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
-        $estabelecimentoDto = new SaveEstabelecimentosDTO(
+        $estabelecimentoResponseDto = new SaveEstabelecimentosDTO(
             $data['name'] ?? null,
             $data['cidade'] ?? null,
             $data['estado'] ?? null,
@@ -107,9 +107,9 @@ final class EstabelecimentosController extends AbstractController
         );
 
         try {
-            $estabelecimento = $this->estabelecimentosService->update($estabelecimentoDto);
+            $estabelecimento = $this->estabelecimentosService->update($estabelecimentoResponseDto);
 
-            return new JsonResponse(EstabelecimentosMapper::toDto($estabelecimento), 201);
+            return new JsonResponse(EstabelecimentosMapper::toResponseDto($estabelecimento), 201);
         } catch (\Throwable $th) {
             return new JsonResponse(['error' => $th->getMessage()], 400);
         }
