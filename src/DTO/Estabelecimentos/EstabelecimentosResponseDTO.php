@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DTO;
+namespace App\DTO\Estabelecimentos;
 
-class EstabelecimentosDTO
+class EstabelecimentosResponseDTO
 {
     public function __construct(
         public readonly int $id,

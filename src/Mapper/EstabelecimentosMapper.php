@@ -2,14 +2,14 @@
 
 namespace App\Mapper;
 
-use App\DTO\EstabelecimentosDTO;
+use App\DTO\Estabelecimentos\EstabelecimentosResponseDTO;
 use App\Entity\Estabelecimentos;
 
 class EstabelecimentosMapper
 {
-    public static function toDto(Estabelecimentos $estabelecimentos): EstabelecimentosDTO
+    public static function toDto(Estabelecimentos $estabelecimentos): EstabelecimentosResponseDTO
     {
-        return new EstabelecimentosDTO(
+        return new EstabelecimentosResponseDTO(
             $estabelecimentos->getId(),
             $estabelecimentos->getName(),
             $estabelecimentos->getCidade(),

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DTO;
+namespace App\DTO\Categorias;
 
-class CategoriasDTO
+class CategoriasResponseDTO
 {
     public function __construct(
         public readonly int $id,

@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\DTO\SaveEstabelecimentosDTO;
+use App\DTO\Estabelecimentos\SaveEstabelecimentosDTO;
 use App\Entity\Estabelecimentos;
 use App\Enum\TipoEstabelecimentoEnum;
 use App\Repository\EstabelecimentosRepository;
@@ -51,7 +51,7 @@ class EstabelecimentosService
 
     /**
      * Summary of create
-     * @param \App\DTO\SaveEstabelecimentosDTO $dto
+     * @param \App\DTO\Estabelecimentos\SaveEstabelecimentosDTO $dto
      * @param bool $flush
      * @throws \InvalidArgumentException
      * @return Estabelecimentos
@@ -86,12 +86,12 @@ class EstabelecimentosService
 
     /**
      * Summary of update
-     * @param \App\DTO\SaveEstabelecimentosDTO $dto
+     * @param \App\DTO\Estabelecimentos\SaveEstabelecimentosDTO $dto
      * @param bool $flush
      * @throws \InvalidArgumentException
      * @return object|null
      */
-    public function update(SaveEstabelecimentosDTO $dto, bool $flush = false): Estabelecimentos
+    public function update(SaveEstabelecimentosDTO $dto, bool $flush = true): Estabelecimentos
     {
         try {
             if($dto->tipo) {

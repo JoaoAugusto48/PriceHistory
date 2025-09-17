@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\DTO\SaveMarcasDTO;
+use App\DTO\Marcas\SaveMarcasDTO;
 use App\Mapper\MarcasMapper;
 use App\Service\MarcasService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

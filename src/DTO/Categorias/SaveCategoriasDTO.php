@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO;
+namespace App\DTO\Categorias;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class SaveCategoriasDTO

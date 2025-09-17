@@ -1,8 +1,10 @@
 <?php
 
-namespace App\DTO;
+namespace App\DTO\SubCategorias;
 
-class SubCategoriasDTO
+use App\DTO\Categorias\CategoriasResumoDTO;
+
+class SubCategoriasResponseDTO
 {
     public function __construct(
         public readonly int $id,

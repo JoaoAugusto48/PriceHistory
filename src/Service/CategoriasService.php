@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\DTO\SaveCategoriasDTO;
+use App\DTO\Categorias\SaveCategoriasDTO;
 use App\Entity\Categorias;
 use App\Repository\CategoriasRepository;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -51,7 +51,7 @@ class CategoriasService
 
     /**
      * Summary of create
-     * @param \App\DTO\SaveCategoriasDTO $dto
+     * @param \App\DTO\Categorias\SaveCategoriasDTO $dto
      * @param bool $flush
      * @throws \InvalidArgumentException
      * @return Categorias
@@ -73,7 +73,7 @@ class CategoriasService
 
     /**
      * Summary of update
-     * @param \App\DTO\SaveCategoriasDTO $dto
+     * @param \App\DTO\Categorias\SaveCategoriasDTO $dto
      * @param bool $flush
      * @throws \InvalidArgumentException
      * @return Categorias|null

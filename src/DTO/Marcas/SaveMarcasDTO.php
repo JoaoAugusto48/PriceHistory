@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO;
+namespace App\DTO\Marcas;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class SaveMarcasDTO

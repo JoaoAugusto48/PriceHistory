@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\DTO\SaveMarcasDTO;
+use App\DTO\Marcas\SaveMarcasDTO;
 use App\Entity\Marcas;
 use App\Repository\MarcasRepository;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -52,7 +52,7 @@ class MarcasService
 
     /**
      * Summary of create
-     * @param \App\DTO\SaveMarcasDTO $dto
+     * @param \App\DTO\Marcas\SaveMarcasDTO $dto
      * @param bool $flush
      * @throws \InvalidArgumentException
      * @return Marcas
@@ -75,7 +75,7 @@ class MarcasService
 
     /**
      * Summary of update
-     * @param \App\DTO\SaveMarcasDTO $dto
+     * @param \App\DTO\Marcas\SaveMarcasDTO $dto
      * @param bool $flush
      * @throws \InvalidArgumentException
      * @return Marcas|null

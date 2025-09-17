@@ -2,14 +2,14 @@
 
 namespace App\Mapper;
 
-use App\DTO\MarcasDTO;
+use App\DTO\Marcas\MarcasResponseDTO;
 use App\Entity\Marcas;
 
 class MarcasMapper
 {
-    public static function toDTO(Marcas $marcas): MarcasDTO
+    public static function toDTO(Marcas $marcas): MarcasResponseDTO
     {
-        return new MarcasDTO(
+        return new MarcasResponseDTO(
             $marcas->getId(),
             $marcas->getName(),
             $marcas->getDescription()

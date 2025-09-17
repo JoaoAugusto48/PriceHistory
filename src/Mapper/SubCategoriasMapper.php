@@ -2,15 +2,15 @@
 
 namespace App\Mapper;
 
-use App\DTO\CategoriasResumoDTO;
-use App\DTO\SubCategoriasDTO;
+use App\DTO\Categorias\CategoriasResumoDTO;
+use App\DTO\SubCategorias\SubCategoriasResponseDTO;
 use App\Entity\SubCategorias;
 
 class SubCategoriasMapper
 {
-    public static function toResponseDTO(SubCategorias $subCategorias): SubCategoriasDTO
+    public static function toResponseDTO(SubCategorias $subCategorias): SubCategoriasResponseDTO
     {
-        return new SubCategoriasDTO(
+        return new SubCategoriasResponseDTO(
             $subCategorias->getId(),
             $subCategorias->getName(),
             new CategoriasResumoDTO(

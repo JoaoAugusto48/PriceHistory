@@ -2,14 +2,14 @@
 
 namespace App\Mapper;
 
-use App\DTO\CategoriasDTO;
+use App\DTO\Categorias\CategoriasResponseDTO;
 use App\Entity\Categorias;
 
 class CategoriasMapper
 {
-    public static function toDto(Categorias $categorias): CategoriasDTO
+    public static function toDto(Categorias $categorias): CategoriasResponseDTO
     {
-        return new CategoriasDTO(
+        return new CategoriasResponseDTO(
             $categorias->getId(),
             $categorias->getName()
         );

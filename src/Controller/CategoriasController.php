@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\DTO\SaveCategoriasDTO;
+use App\DTO\Categorias\SaveCategoriasDTO;
 use App\Mapper\CategoriasMapper;
 use App\Service\CategoriasService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,7 +19,9 @@ final class CategoriasController extends AbstractController
     ) {}
 
     /**
-     * Find all categories
+     * Summary of categoriasList
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
      */
     #[Route('', name: 'app_categorias', methods: ['GET'])]
     public function categoriasList(Request $request): JsonResponse
@@ -35,7 +37,10 @@ final class CategoriasController extends AbstractController
     }
 
     /**
-     * Find caterory by ID
+     * Summary of categoriaById
+     * @param int $id
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
      */
     #[Route('/{id}', name: 'app_categorias_id', methods: ['GET'])]
     public function categoriaById(int $id, Request $request): JsonResponse
@@ -50,7 +55,9 @@ final class CategoriasController extends AbstractController
     }
 
     /**
-     * Creating a new Category
+     * Summary of createCategorias
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
      */
     #[Route('/create', name: 'app_categorias_save', methods: ['POST'])]
     public function createCategorias(Request $request): JsonResponse
@@ -68,8 +75,12 @@ final class CategoriasController extends AbstractController
         }
     }
 
+
     /**
-     * Updating a Category
+     * Summary of updateCategorias
+     * @param int $id
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
      */
     #[Route('/{id}/update', name: 'app_categorias_update', methods: ['PUT'])]
     public function updateCategorias(int $id, Request $request): JsonResponse
@@ -95,7 +106,9 @@ final class CategoriasController extends AbstractController
     }
 
     /**
-     * Removing a Category
+     * Summary of deleteCategorias
+     * @param int $id
+     * @return JsonResponse
      */
     #[Route('/{id}/delete', name: 'app_categorias_delete', methods: ['DELETE'])]
     public function deleteCategorias(int $id): JsonResponse

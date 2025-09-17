@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\DTO\SaveEstabelecimentosDTO;
+use App\DTO\Estabelecimentos\SaveEstabelecimentosDTO;
 use App\Mapper\EstabelecimentosMapper;
 use App\Service\EstabelecimentosService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

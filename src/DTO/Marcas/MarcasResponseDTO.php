@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DTO;
+namespace App\DTO\Marcas;
 
-class MarcasDTO
+class MarcasResponseDTO
 {
     public function __construct(
         public readonly int $id,
