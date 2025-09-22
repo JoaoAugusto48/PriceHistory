@@ -2,7 +2,9 @@
 
 namespace App\Service;
 
+use App\DTO\SubCategorias\SaveSubCategoriasDTO;
 use App\Entity\SubCategorias;
+use App\Repository\CategoriasRepository;
 use App\Repository\SubCategoriasRepository;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -10,7 +12,8 @@ class SubCategoriasService
 {
     public function __construct(
         private SubCategoriasRepository $repository,
-        private ValidatorInterface $validator
+        private ValidatorInterface $validator,
+        private CategoriasRepository $categoriasRepository,
     ) {}
 
     /**
@@ -45,6 +48,30 @@ class SubCategoriasService
             $limit,
             $offset
         );
+    }
+
+    /**
+     * Summary of create
+     * @param \App\DTO\SubCategorias\SaveSubCategoriasDTO $dto
+     * @param bool $flush
+     * @throws \InvalidArgumentException
+     * @return SubCategorias
+     */
+    public function create(SaveSubCategoriasDTO $dto, bool $flush = true): SubCategorias
+    {
+        $categoria = $this->categoriasRepository->find($dto->categoria_id);
+
+        if(!$categoria) {
+            throw new \InvalidArgumentException("Categoria {$dto->categoria_id} não encontrada");
+        }
+
+        $subCategoria = new SubCategorias();
+        $subCategoria->setName($dto->name);
+        $subCategoria->setCategoriaId($categoria);
+
+        $this->repository->save($subCategoria, $flush);
+
+        return $subCategoria;
     }
 
 }

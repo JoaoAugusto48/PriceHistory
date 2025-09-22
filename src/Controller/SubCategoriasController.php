@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\DTO\SubCategorias\SaveSubCategoriasDTO;
 use App\Mapper\SubCategoriasMapper;
 use App\Service\SubCategoriasService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,5 +51,29 @@ final class SubCategoriasController extends AbstractController
         }
 
         return new JsonResponse(SubCategoriasMapper::toResponseDTO($subCategoria), 200);
+    }
+
+    /**
+     * Summary of createSubCategoria
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
+     */
+    #[Route('/create', name: 'app_sub_categoria_create', methods: ['POST'])]
+    public function createSubCategoria(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $subCategoriaDto = new SaveSubCategoriasDTO(
+            $data['name'] ?? null,
+            $data['categoria_id'] ?? null
+        );
+
+        try {
+            $subCategoria = $this->subCategoriasService->create($subCategoriaDto);
+
+            return new JsonResponse(SubCategoriasMapper::toResponseDTO($subCategoria), 201);
+        } catch (\Throwable $th) {
+            return new JsonResponse(['error' => $th->getMessage()], 400);
+        }
     }
 }
