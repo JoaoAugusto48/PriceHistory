@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\SubCategorias;
+use App\Exception\SubCategoriasNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -25,13 +26,30 @@ class SubCategoriasRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Summary of remove
+     * @param \App\Entity\SubCategorias $entity
+     * @param bool $flush
+     * @return void
+     */
     public function remove(SubCategorias $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
         if($flush) {
-            $this->getEntityManager()->persist($entity);
+            $this->getEntityManager()->flush();
         }
+    }
+
+    public function findOrFail(int $id): SubCategorias
+    {
+        $subCategoria = $this->find($id);
+
+        if(!$subCategoria) {
+            throw new SubCategoriasNotFoundException();
+        }
+
+        return $subCategoria;
     }
 
     //    /**

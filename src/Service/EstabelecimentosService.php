@@ -101,7 +101,7 @@ class EstabelecimentosService
             throw new \InvalidArgumentException("Tipo inválido: {$dto->tipo}");
         }
 
-        $estabelecimento = $this->repository->find($dto->id);
+        $estabelecimento = $this->repository->findOrFail($dto->id);
 
         $estabelecimento->setName($dto->name ?? $estabelecimento->getName());
         $estabelecimento->setCidade($dto->cidade ?? $estabelecimento->getCidade());
@@ -124,11 +124,7 @@ class EstabelecimentosService
 
     public function delete(int $id, bool $flush = true): void
     {
-        $estabelecimento = $this->repository->find($id);
-
-        if(!$estabelecimento) {
-            throw new \InvalidArgumentException('Estabelecimento não encontrado');
-        }
+        $estabelecimento = $this->repository->findOrFail($id);
 
         $this->repository->remove($estabelecimento, $flush);
     }

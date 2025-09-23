@@ -59,11 +59,7 @@ class SubCategoriasService
      */
     public function create(SaveSubCategoriasDTO $dto, bool $flush = true): SubCategorias
     {
-        $categoria = $this->categoriasRepository->find($dto->categoria_id);
-
-        if(!$categoria) {
-            throw new \InvalidArgumentException("Categoria {$dto->categoria_id} não encontrada");
-        }
+        $categoria = $this->categoriasRepository->findOrFail($dto->categoria_id);
 
         $subCategoria = new SubCategorias();
         $subCategoria->setName($dto->name);
@@ -74,4 +70,40 @@ class SubCategoriasService
         return $subCategoria;
     }
 
+    /**
+     * Summary of update
+     * @param \App\DTO\SubCategorias\SaveSubCategoriasDTO $dto
+     * @param mixed $flush
+     * @throws \InvalidArgumentException
+     * @return SubCategorias
+     */
+    public function update(SaveSubCategoriasDTO $dto, $flush = true): SubCategorias
+    {
+        $subCategoria = $this->repository->findOrFail($dto->id);
+        $subCategoria->setName($dto->name ?? $subCategoria->getName());
+
+        if($dto->categoria_id) {
+            $categoria = $this->categoriasRepository->findOrFail($dto->categoria_id);
+
+            $subCategoria->setCategoriaId($categoria);
+        }
+
+        $this->repository->save($subCategoria, $flush);
+
+        return $subCategoria;
+    }
+
+    /**
+     * Summary of delete
+     * @param int $id
+     * @param bool $flush
+     * @return void
+     */
+    public function delete(int $id, bool $flush = true): void
+    {
+        $subCategoria = $this->repository->findOrFail($id);
+        // Outras verificações a serem adicionadas
+
+        $this->repository->remove($subCategoria, $flush);
+    }
 }

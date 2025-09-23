@@ -76,4 +76,42 @@ final class SubCategoriasController extends AbstractController
             return new JsonResponse(['error' => $th->getMessage()], 400);
         }
     }
+
+    /**
+     * Summary of updateSubCategoria
+     * @param int $id
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
+     */
+    #[Route('/{id}/update', name: 'app_sub_categoria_update', methods: ['PUT'])]
+    public function updateSubCategoria(int $id, Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $subCategoriaDto = new SaveSubCategoriasDTO(
+            $data['name'] ?? null,
+            $data['categoria_id'] ?? null,
+            $id
+        );
+
+        try {
+            $subCategoria = $this->subCategoriasService->update($subCategoriaDto);
+
+            return new JsonResponse(SubCategoriasMapper::toResponseDTO($subCategoria), 202);
+        } catch (\Throwable $th) {
+            return new JsonResponse(['error' => $th->getMessage()], 400);
+        }
+    }
+
+    #[Route('/{id}/delete', name: 'app_sub_categoria_delete', methods: ['DELETE'])]
+    public function deleteSubCategoria(int $id, Request $request): JsonResponse
+    {
+        try {
+            $this->subCategoriasService->delete($id);
+
+            return new JsonResponse(null, 204);
+        } catch (\Throwable $th) {
+            return new JsonResponse(['error' => $th->getMessage()], 500);
+        }
+    }
 }

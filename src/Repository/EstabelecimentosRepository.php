@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Estabelecimentos;
+use App\Exception\EstabelecimentosNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -32,6 +33,23 @@ class EstabelecimentosRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * Summary of findOrFail
+     * @param int $id
+     * @throws \App\Exception\EstabelecimentosNotFoundException
+     * @return object
+     */
+    public function findOrFail(int $id): Estabelecimentos
+    {
+        $estabelecimentos = $this->find($id);
+
+        if(!$estabelecimentos) {
+            throw new EstabelecimentosNotFoundException();
+        }
+
+        return $estabelecimentos;
     }
 
     //    /**

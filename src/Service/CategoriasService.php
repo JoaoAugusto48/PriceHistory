@@ -80,7 +80,7 @@ class CategoriasService
      */
     public function update(SaveCategoriasDTO $dto, bool $flush = true): Categorias
     {
-        $categoria = $this->repository->find($dto->id);
+        $categoria = $this->repository->findOrFail($dto->id);
         $categoria->setName($dto->name ?? $categoria->getName());
 
         $errors = $this->validator->validate($categoria);
@@ -102,11 +102,7 @@ class CategoriasService
      */
     public function delete(int $id, bool $flush = true): void
     {
-        $categoria = $this->repository->find($id);
-
-        if(!$categoria) {
-            throw new \InvalidArgumentException('Categoria não encontrada');
-        }
+        $categoria = $this->repository->findOrFail($id);
 
         $this->repository->remove($categoria, $flush);
     }

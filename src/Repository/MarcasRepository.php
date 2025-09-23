@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Marcas;
+use App\Exception\MarcasNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,23 @@ class MarcasRepository extends ServiceEntityRepository
         if($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * Summary of findOrFail
+     * @param int $id
+     * @throws \App\Exception\MarcasNotFoundException
+     * @return Marcas
+     */
+    public function findOrFail(int $id): Marcas
+    {
+        $marca = $this->find($id);
+
+        if(!$marca) {
+            throw new MarcasNotFoundException();
+        }
+
+        return $marca;
     }
 
     //    /**

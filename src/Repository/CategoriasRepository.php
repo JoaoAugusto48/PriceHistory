@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Categorias;
+use App\Exception\CategoriasNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,23 @@ class CategoriasRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * Summary of findOrFail
+     * @param int $id
+     * @throws \App\Exception\CategoriasNotFoundException
+     * @return Categorias
+     */
+    public function findOrFail(int $id): Categorias
+    {
+        $categoria = $this->find($id);
+
+        if(!$categoria) {
+            throw new CategoriasNotFoundException();
+        }
+
+        return $categoria;
     }
 
     //    /**

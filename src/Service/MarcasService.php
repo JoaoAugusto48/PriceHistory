@@ -82,7 +82,7 @@ class MarcasService
      */
     public function update(SaveMarcasDTO $dto, bool $flush = true): Marcas
     {
-        $marca = $this->repository->find($dto->id);
+        $marca = $this->repository->findOrFail($dto->id);
         $marca->setName($dto->name ?? $marca->getName());
         $marca->setDescription($dto->description ?? $marca->getDescription());
 
@@ -105,7 +105,7 @@ class MarcasService
      */
     public function delete(int $id, bool $flush = true): void
     {
-        $marca = $this->repository->find($id);
+        $marca = $this->repository->findOrFail($id);
 
         if(!$marca) {
             throw new \InvalidArgumentException('Marca não encontrada');
