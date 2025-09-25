@@ -16,7 +16,7 @@ class EstabelecimentosMapper
             $estabelecimentos->getEstado(),
             $estabelecimentos->getEndereco(),
             $estabelecimentos->getCnpj(),
-            $estabelecimentos->getTipo(),
+            $estabelecimentos->getTipo()->name,
             $estabelecimentos->getUrl(),
             $estabelecimentos->getTelefone()
         );

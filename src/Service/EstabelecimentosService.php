@@ -59,7 +59,7 @@ class EstabelecimentosService
     public function create(SaveEstabelecimentosDTO $dto, bool $flush = true): Estabelecimentos
     {
         try {
-            $tipo = TipoEstabelecimentoEnum::from(strtolower($dto->tipo))->value;
+            $tipo = TipoEstabelecimentoEnum::from(strtolower($dto->tipo));
         } catch (\ValueError $th) {
             throw new \InvalidArgumentException("Tipo inválido: {$dto->tipo}");
         }
@@ -95,7 +95,7 @@ class EstabelecimentosService
     {
         try {
             if($dto->tipo) {
-                $tipo = TipoEstabelecimentoEnum::from(strtolower($dto->tipo))->value;
+                $tipo = TipoEstabelecimentoEnum::from(strtolower($dto->tipo));
             }
         } catch (\ValueError $e) {
             throw new \InvalidArgumentException("Tipo inválido: {$dto->tipo}");

@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Repository\EstabelecimentosRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Enum\TipoEstabelecimentoEnum.php
+use App\Enum\TipoEstabelecimentoEnum;
 
 #[ORM\Entity(repositoryClass: EstabelecimentosRepository::class)]
 class Estabelecimentos extends BaseEntity
@@ -27,13 +27,14 @@ class Estabelecimentos extends BaseEntity
     private ?string $cnpj = null;
 
     #[ORM\Column(length: 255, type: "string", enumType: TipoEstabelecimentoEnum::class)]
-    private TipoEstabelecimentoEnum $tipo = null;
+    private TipoEstabelecimentoEnum $tipo;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url = null;
 
     #[ORM\Column(length: 40, nullable: true)]
     private ?string $telefone = null;
+
 
     public function getName(): ?string
     {
