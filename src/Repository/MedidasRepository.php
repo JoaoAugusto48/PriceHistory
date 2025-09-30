@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Medidas;
+use App\Exception\MedidasNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -32,6 +33,17 @@ class MedidasRepository extends ServiceEntityRepository
         if($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findOrFail(int $id): Medidas
+    {
+        $medida = $this->find($id);
+
+        if(!$medida) {
+            throw new MedidasNotFoundException();
+        }
+
+        return $medida;
     }
 
     //    /**
