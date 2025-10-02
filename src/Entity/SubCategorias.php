@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SubCategoriasRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -18,9 +20,16 @@ class SubCategorias extends BaseEntity
     #[Assert\NotBlank]
     private ?Categorias $categoria = null;
 
+    /**
+     * @var Collection<int, Produto>
+     */
+    #[ORM\OneToMany(targetEntity: Produto::class, mappedBy: 'subCategoria')]
+    private Collection $produtos;
+
     public function __construct(string $name = '')
     {
         $this->name = $name;
+        $this->produtos = new ArrayCollection();
     }
 
     public function getName(): ?string
@@ -43,6 +52,36 @@ class SubCategorias extends BaseEntity
     public function setCategoriaId(?Categorias $categoria): static
     {
         $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Produto>
+     */
+    public function getProdutos(): Collection
+    {
+        return $this->produtos;
+    }
+
+    public function addProduto(Produto $produto): static
+    {
+        if (!$this->produtos->contains($produto)) {
+            $this->produtos->add($produto);
+            $produto->setSubCategoria($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduto(Produto $produto): static
+    {
+        if ($this->produtos->removeElement($produto)) {
+            // set the owning side to null (unless already changed)
+            if ($produto->getSubCategoria() === $this) {
+                $produto->setSubCategoria(null);
+            }
+        }
 
         return $this;
     }

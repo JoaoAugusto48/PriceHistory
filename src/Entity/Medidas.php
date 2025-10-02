@@ -20,6 +20,7 @@ class Medidas extends BaseEntity
     private ?float $fatorConversao = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'medidas')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'RESTRICT')]
     private ?self $medidaBase = null;
 
     public function __construct(

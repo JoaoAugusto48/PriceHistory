@@ -50,6 +50,13 @@ class MedidasService
         );
     }
 
+    /**
+     * Summary of create
+     * @param \App\DTO\Medidas\SaveMedidasDTO $dto
+     * @param bool $flush
+     * @throws \InvalidArgumentException
+     * @return Medidas
+     */
     public function create(SaveMedidasDTO $dto, bool $flush = true): Medidas
     {
 
@@ -71,6 +78,27 @@ class MedidasService
         $this->repository->save($medidas, $flush);
 
         return $medidas;
+    }
+
+    /**
+     * Summary of delete
+     * @param int $id
+     * @param bool $flush
+     * @return void
+     */
+    public function delete(int $id, bool $flush = true): void
+    {
+        $medida = $this->repository->findOrFail($id);
+
+        if(!$medida->getMedidaBase()) {
+            $medidasRelacionadas = $this->repository->findBy(['medidaBase' => $medida]);
+
+            if(count($medidasRelacionadas) > 0){
+                throw new \DomainException("Operação não realizada: Essa medida é usada como base por outras medidas");
+            }
+        }
+
+        $this->repository->remove($medida, $flush);
     }
 
 }

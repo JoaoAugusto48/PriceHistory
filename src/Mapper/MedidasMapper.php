@@ -2,6 +2,7 @@
 
 namespace App\Mapper;
 
+use App\DTO\Medidas\MedidasListResponseDTO;
 use App\DTO\Medidas\MedidasResponseDTO;
 use App\Entity\Medidas;
 
@@ -19,6 +20,17 @@ class MedidasMapper
             $medidas->getSigla(),
             $medidas->getFatorConversao(),
             self::toResponseDto($medidas->getMedidaBase())
+        );
+    }
+
+    public static function toListResponseDto(Medidas $medidas): MedidasListResponseDTO
+    {
+        return new MedidasListResponseDTO(
+            $medidas->getId(),
+            $medidas->getName(),
+            $medidas->getSigla(),
+            $medidas->getFatorConversao(),
+            $medidas->getMedidaBase()?->getId()
         );
     }
 }

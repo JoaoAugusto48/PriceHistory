@@ -107,10 +107,6 @@ class MarcasService
     {
         $marca = $this->repository->findOrFail($id);
 
-        if(!$marca) {
-            throw new \InvalidArgumentException('Marca não encontrada');
-        }
-
         $this->repository->remove($marca, $flush);
     }
 }
