@@ -21,9 +21,9 @@ class SubCategorias extends BaseEntity
     private ?Categorias $categoria = null;
 
     /**
-     * @var Collection<int, Produto>
+     * @var Collection<int, Produtos>
      */
-    #[ORM\OneToMany(targetEntity: Produto::class, mappedBy: 'subCategoria')]
+    #[ORM\OneToMany(targetEntity: Produtos::class, mappedBy: 'subCategoria')]
     private Collection $produtos;
 
     public function __construct(string $name = '')
@@ -57,14 +57,14 @@ class SubCategorias extends BaseEntity
     }
 
     /**
-     * @return Collection<int, Produto>
+     * @return Collection<int, Produtos>
      */
     public function getProdutos(): Collection
     {
         return $this->produtos;
     }
 
-    public function addProduto(Produto $produto): static
+    public function addProduto(Produtos $produto): static
     {
         if (!$this->produtos->contains($produto)) {
             $this->produtos->add($produto);
@@ -74,7 +74,7 @@ class SubCategorias extends BaseEntity
         return $this;
     }
 
-    public function removeProduto(Produto $produto): static
+    public function removeProduto(Produtos $produto): static
     {
         if ($this->produtos->removeElement($produto)) {
             // set the owning side to null (unless already changed)

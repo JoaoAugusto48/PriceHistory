@@ -2,22 +2,52 @@
 
 namespace App\Repository;
 
-use App\Entity\Produto;
+use App\Entity\Produtos;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Produto>
+ * @extends ServiceEntityRepository<Produtos>
  */
-class ProdutoRepository extends ServiceEntityRepository
+class ProdutosRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Produto::class);
+        parent::__construct($registry, Produtos::class);
+    }
+
+    /**
+     * Summary of save
+     * @param \App\Entity\Produtos $entity
+     * @param bool $flush
+     * @return void
+     */
+    public function save(Produtos $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    /**
+     * Summary of remove
+     * @param \App\Entity\Produtos $entity
+     * @param bool $flush
+     * @return void
+     */
+    public function remove(Produtos $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if($flush) {
+            $this->getEntityManager()->flush();
+        }
     }
 
     //    /**
-    //     * @return Produto[] Returns an array of Produto objects
+    //     * @return Produto[] Returns an array of Produtos objects
     //     */
     //    public function findByExampleField($value): array
     //    {

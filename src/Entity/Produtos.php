@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ProdutoRepository;
+use App\Repository\ProdutosRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ProdutoRepository::class)]
-class Produto extends BaseEntity
+#[ORM\Entity(repositoryClass: ProdutosRepository::class)]
+class Produtos extends BaseEntity
 {
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -14,6 +14,7 @@ class Produto extends BaseEntity
     #[ORM\ManyToOne(inversedBy: 'produtos')]
     #[ORM\JoinColumn(nullable: false)]
     private ?SubCategorias $subCategoria = null;
+
 
     public function getName(): ?string
     {
