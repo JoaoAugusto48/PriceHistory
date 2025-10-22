@@ -76,4 +76,45 @@ class ProdutosService
 
         return $produto;
     }
+
+    /**
+     * Summary of update
+     * @param \App\DTO\Produtos\SaveProdutosDTO $dto
+     * @param bool $flush
+     * @throws \InvalidArgumentException
+     * @return Produtos
+     */
+    public function update(SaveProdutosDTO $dto, bool $flush = true): Produtos
+    {
+        $produto = $this->repository->findOrFail($dto->id);
+        $produto->setName($dto->name ?? $produto->getName());
+
+        if($dto->subCategoria_id) {
+            $relatedSubCategoria = $this->subCategoriasRepository->findOrFail($dto->subCategoria_id);
+            $produto->setSubCategoria($relatedSubCategoria);
+        }
+
+        $errors = $this->validator->validate($produto);
+        if(count($errors) > 0) {
+            throw new \InvalidArgumentException((string) $errors);
+        }
+
+        $this->repository->save($produto, $flush);
+
+        return $produto;
+    }
+
+    /**
+     * Summary of delete
+     * @param int $id
+     * @param bool $flush
+     * @return void
+     */
+    public function delete(int $id, bool $flush = true): void
+    {
+        $produto = $this->repository->findOrFail($id);
+        $produto->deactivate();
+
+        $this->repository->save($produto, $flush);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Produtos;
+use App\Exception\ProdutosNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -44,6 +45,23 @@ class ProdutosRepository extends ServiceEntityRepository
         if($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * Summary of findOrFail
+     * @param int $id
+     * @throws \App\Exception\ProdutosNotFoundException
+     * @return Produtos
+     */
+    public function findOrFail(int $id): Produtos
+    {
+        $produto = $this->find($id);
+
+        if(!$produto) {
+            throw new ProdutosNotFoundException();
+        }
+
+        return $produto;
     }
 
     //    /**

@@ -37,7 +37,7 @@ class ProdutosMapper
                 $produto->getSubCategoria()->getId(),
                 $produto->getSubCategoria()->getName(),
                 $produto->getSubCategoria()->getCategoria()->getId()
-            )
+            ),
         );
     }
 }

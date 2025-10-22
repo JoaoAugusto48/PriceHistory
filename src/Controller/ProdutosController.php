@@ -77,5 +77,48 @@ final class ProdutosController extends AbstractController
         }
     }
 
+    /**
+     * Summary of produtoUpdate
+     * @param int $id
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
+     */
+    #[Route('/{id}/update', name:'app_produtos_update', methods: ['PUT'])]
+    public function produtoUpdate(int $id, Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $produtoDTO = new SaveProdutosDTO(
+            $data['name'] ?? null,
+            $data['subCategoria_id'] ?? null,
+            $id
+        );
+
+        try {
+            $produto = $this->produtosService->update($produtoDTO);
+
+            return new JsonResponse(ProdutosMapper::toResponseDto($produto), 202);
+        } catch (\Throwable $th) {
+            return new JsonResponse(['error' => $th->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Summary of produtosRemove
+     * @param int $id
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
+     */
+    #[Route('/{id}/delete', name: 'app_produtos_remove', methods: ['DELETE'])]
+    public function produtosRemove(int $id, Request $request): JsonResponse
+    {
+        try {
+            $this->produtosService->delete($id);
+
+            return new JsonResponse(null, 204);
+        } catch (\Throwable $th) {
+            return new JsonResponse(['error' => $th->getMessage()], 500);
+        }
+    }
 
 }
