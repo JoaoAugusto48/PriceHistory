@@ -33,7 +33,7 @@ class SubCategoriasService
      * @param int $offset
      * @param string $orderBy
      * @param string $direction
-     * @return array
+     * @return SubCategorias[]
      */
     public function findByFilters(
         ?string $name = null,

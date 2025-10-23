@@ -2,7 +2,6 @@
 
 namespace App\Mapper;
 
-use App\DTO\Categorias\CategoriasResponseDTO;
 use App\DTO\Categorias\CategoriasResumoDTO;
 use App\DTO\Produtos\ProdutosListResponseDTO;
 use App\DTO\Produtos\ProdutosResponseDTO;
