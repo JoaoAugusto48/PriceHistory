@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\VariacaoProdutos;
+use App\Exception\VariacaoProdutosNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -31,6 +32,12 @@ class VariacaoProdutosRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Summary of remove
+     * @param VariacaoProdutos $entity
+     * @param bool $flush
+     * @return void
+     */
     public function remove(VariacaoProdutos $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -38,6 +45,23 @@ class VariacaoProdutosRepository extends ServiceEntityRepository
         if($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * Summary of findOrFail
+     * @param int $id
+     * @throws VariacaoProdutosNotFoundException
+     * @return object
+     */
+    public function findOrFail(int $id): VariacaoProdutos
+    {
+        $variacaoProduto = $this->find($id);
+
+        if(!$variacaoProduto) {
+            throw new VariacaoProdutosNotFoundException();
+        }
+
+        return $variacaoProduto;
     }
 
     //    /**

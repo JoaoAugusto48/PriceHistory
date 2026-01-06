@@ -74,4 +74,17 @@ class VariacaoProdutosService
         return $variacaoProduto;
     }
 
+    /**
+     * Summary of delete
+     * @param int $id
+     * @param bool $flush
+     * @return void
+     */
+    public function delete(int $id, bool $flush = true): void
+    {
+        $variacaoProduto = $this->repository->findOrFail($id);
+
+        $this->repository->remove($variacaoProduto, $flush);
+    }
+
 }

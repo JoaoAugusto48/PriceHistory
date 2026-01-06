@@ -60,7 +60,7 @@ final class VariacaoProdutosController extends AbstractController
      * @return JsonResponse
      */
     #[Route('/create', name: 'app_variacao_produtos_create', methods: ['POST'])]
-    public function variacaoProdutosCreate(Request $request): JsonResponse
+    public function createVariacaoProdutos(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -77,6 +77,17 @@ final class VariacaoProdutosController extends AbstractController
         } catch (\Throwable $th) {
             return new JsonResponse(['error' => $th->getMessage()], 500);
         }
+    }
 
+    #[Route('/{id}/delete', name: 'app_variacao_produtos_delete', methods: ['DELETE'])]
+    public function deleteVariacaoProdutos(int $id, Request $request): JsonResponse
+    {
+        try {
+            $this->variacaoProdutosService->delete($id);
+
+            return new JsonResponse(null, 204);
+        } catch (\Throwable $th) {
+            return new JsonResponse(['error' => $th->getMessage()], 500);
+        }
     }
 }
