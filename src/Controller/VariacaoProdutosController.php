@@ -79,6 +79,22 @@ final class VariacaoProdutosController extends AbstractController
         }
     }
 
+    /**
+     * Summary of variacaoMedidaUpdate
+     * @return JsonResponse
+     */
+    #[Route('/{id}/update', name: 'app_variacao_produtos_update', methods: ['GET', 'POST', 'PUT'])]
+    public function variacaoMedidaUpdate(): JsonResponse
+    {
+        return new JsonResponse(['error' => 'Esse objeto não permite esse tipo de operação'], 500);
+    }
+
+    /**
+     * Summary of deleteVariacaoProdutos
+     * @param int $id
+     * @param Request $request
+     * @return JsonResponse
+     */
     #[Route('/{id}/delete', name: 'app_variacao_produtos_delete', methods: ['DELETE'])]
     public function deleteVariacaoProdutos(int $id, Request $request): JsonResponse
     {

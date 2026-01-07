@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EstabelecimentosRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Enum\TipoEstabelecimentoEnum;
@@ -34,6 +36,17 @@ class Estabelecimentos extends BaseEntity
 
     #[ORM\Column(length: 40, nullable: true)]
     private ?string $telefone = null;
+
+    /**
+     * @var Collection<int, PrecoHistorico>
+     */
+    #[ORM\OneToMany(targetEntity: PrecoHistorico::class, mappedBy: 'estabelecimento')]
+    private Collection $produtoVariacao;
+
+    public function __construct()
+    {
+        $this->produtoVariacao = new ArrayCollection();
+    }
 
 
     public function getName(): ?string
@@ -128,6 +141,36 @@ class Estabelecimentos extends BaseEntity
     public function setTelefone(?string $telefone): static
     {
         $this->telefone = $telefone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PrecoHistorico>
+     */
+    public function getProdutoVariacao(): Collection
+    {
+        return $this->produtoVariacao;
+    }
+
+    public function addProdutoVariacao(PrecoHistorico $produtoVariacao): static
+    {
+        if (!$this->produtoVariacao->contains($produtoVariacao)) {
+            $this->produtoVariacao->add($produtoVariacao);
+            $produtoVariacao->setEstabelecimento($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProdutoVariacao(PrecoHistorico $produtoVariacao): static
+    {
+        if ($this->produtoVariacao->removeElement($produtoVariacao)) {
+            // set the owning side to null (unless already changed)
+            if ($produtoVariacao->getEstabelecimento() === $this) {
+                $produtoVariacao->setEstabelecimento(null);
+            }
+        }
 
         return $this;
     }
