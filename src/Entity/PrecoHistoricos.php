@@ -7,10 +7,10 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PrecoHistoricoRepository::class)]
-class PrecoHistorico extends BaseEntity
+class PrecoHistoricos extends BaseEntity
 {
 
-    #[ORM\ManyToOne(inversedBy: 'produtoVariacao')]
+    #[ORM\ManyToOne(inversedBy: 'precoHistoricos')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Estabelecimentos $estabelecimento = null;
 

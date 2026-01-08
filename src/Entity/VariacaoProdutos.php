@@ -27,14 +27,14 @@ class VariacaoProdutos
     private ?Medidas $medida = null;
 
     /**
-     * @var Collection<int, PrecoHistorico>
+     * @var Collection<int, PrecoHistoricos>
      */
-    #[ORM\OneToMany(targetEntity: PrecoHistorico::class, mappedBy: 'produtoVariacao')]
-    private Collection $precoHistoricos;
+    #[ORM\OneToMany(targetEntity: PrecoHistoricos::class, mappedBy: 'produtoVariacao')]
+    private Collection $PrecoHistoricos;
 
     public function __construct()
     {
-        $this->precoHistoricos = new ArrayCollection();
+        $this->PrecoHistoricos = new ArrayCollection();
     }
 
 
@@ -80,29 +80,29 @@ class VariacaoProdutos
     }
 
     /**
-     * @return Collection<int, PrecoHistorico>
+     * @return Collection<int, PrecoHistoricos>
      */
     public function getPrecoHistoricos(): Collection
     {
-        return $this->precoHistoricos;
+        return $this->PrecoHistoricos;
     }
 
-    public function addPrecoHistorico(PrecoHistorico $precoHistorico): static
+    public function addPrecoHistoricos(PrecoHistoricos $PrecoHistoricos): static
     {
-        if (!$this->precoHistoricos->contains($precoHistorico)) {
-            $this->precoHistoricos->add($precoHistorico);
-            $precoHistorico->setProdutoVariacao($this);
+        if (!$this->PrecoHistoricos->contains($PrecoHistoricos)) {
+            $this->PrecoHistoricos->add($PrecoHistoricos);
+            $PrecoHistoricos->setProdutoVariacao($this);
         }
 
         return $this;
     }
 
-    public function removePrecoHistorico(PrecoHistorico $precoHistorico): static
+    public function removePrecoHistoricos(PrecoHistoricos $PrecoHistoricos): static
     {
-        if ($this->precoHistoricos->removeElement($precoHistorico)) {
+        if ($this->PrecoHistoricos->removeElement($PrecoHistoricos)) {
             // set the owning side to null (unless already changed)
-            if ($precoHistorico->getProdutoVariacao() === $this) {
-                $precoHistorico->setProdutoVariacao(null);
+            if ($PrecoHistoricos->getProdutoVariacao() === $this) {
+                $PrecoHistoricos->setProdutoVariacao(null);
             }
         }
 

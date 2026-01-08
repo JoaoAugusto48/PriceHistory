@@ -22,16 +22,16 @@ class Marcas extends BaseEntity
     private ?string $description = null;
 
     /**
-     * @var Collection<int, PrecoHistorico>
+     * @var Collection<int, PrecoHistoricos>
      */
-    #[ORM\OneToMany(targetEntity: PrecoHistorico::class, mappedBy: 'marca')]
-    private Collection $precoHistoricos;
+    #[ORM\OneToMany(targetEntity: PrecoHistoricos::class, mappedBy: 'marca')]
+    private Collection $PrecoHistoricos;
 
     public function __construct(string $name = '', string $description = '')
     {
         $this->name = $name;
         $this->description = $description;
-        $this->precoHistoricos = new ArrayCollection();
+        $this->PrecoHistoricos = new ArrayCollection();
     }
 
     public function getName(): string
@@ -59,29 +59,29 @@ class Marcas extends BaseEntity
     }
 
     /**
-     * @return Collection<int, PrecoHistorico>
+     * @return Collection<int, PrecoHistoricos>
      */
     public function getPrecoHistoricos(): Collection
     {
-        return $this->precoHistoricos;
+        return $this->PrecoHistoricos;
     }
 
-    public function addPrecoHistorico(PrecoHistorico $precoHistorico): static
+    public function addPrecoHistoricos(PrecoHistoricos $PrecoHistoricos): static
     {
-        if (!$this->precoHistoricos->contains($precoHistorico)) {
-            $this->precoHistoricos->add($precoHistorico);
-            $precoHistorico->setMarca($this);
+        if (!$this->PrecoHistoricos->contains($PrecoHistoricos)) {
+            $this->PrecoHistoricos->add($PrecoHistoricos);
+            $PrecoHistoricos->setMarca($this);
         }
 
         return $this;
     }
 
-    public function removePrecoHistorico(PrecoHistorico $precoHistorico): static
+    public function removePrecoHistoricos(PrecoHistoricos $PrecoHistoricos): static
     {
-        if ($this->precoHistoricos->removeElement($precoHistorico)) {
+        if ($this->PrecoHistoricos->removeElement($PrecoHistoricos)) {
             // set the owning side to null (unless already changed)
-            if ($precoHistorico->getMarca() === $this) {
-                $precoHistorico->setMarca(null);
+            if ($PrecoHistoricos->getMarca() === $this) {
+                $PrecoHistoricos->setMarca(null);
             }
         }
 

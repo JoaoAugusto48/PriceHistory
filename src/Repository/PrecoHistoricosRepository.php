@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\PrecoHistorico;
+use App\Entity\PrecoHistoricos;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<PrecoHistorico>
+ * @extends ServiceEntityRepository<PrecoHistoricos>
  */
-class PrecoHistoricoRepository extends ServiceEntityRepository
+class PrecoHistoricosRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, PrecoHistorico::class);
+        parent::__construct($registry, PrecoHistoricos::class);
     }
 
     //    /**
-    //     * @return PrecoHistorico[] Returns an array of PrecoHistorico objects
+    //     * @return PrecoHistoricos[] Returns an array of PrecoHistoricos objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class PrecoHistoricoRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?PrecoHistorico
+    //    public function findOneBySomeField($value): ?PrecoHistoricos
     //    {
     //        return $this->createQueryBuilder('p')
     //            ->andWhere('p.exampleField = :val')

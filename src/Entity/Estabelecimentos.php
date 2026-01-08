@@ -38,9 +38,9 @@ class Estabelecimentos extends BaseEntity
     private ?string $telefone = null;
 
     /**
-     * @var Collection<int, PrecoHistorico>
+     * @var Collection<int, PrecoHistoricos>
      */
-    #[ORM\OneToMany(targetEntity: PrecoHistorico::class, mappedBy: 'estabelecimento')]
+    #[ORM\OneToMany(targetEntity: PrecoHistoricos::class, mappedBy: 'estabelecimento')]
     private Collection $produtoVariacao;
 
     public function __construct()
@@ -146,14 +146,14 @@ class Estabelecimentos extends BaseEntity
     }
 
     /**
-     * @return Collection<int, PrecoHistorico>
+     * @return Collection<int, PrecoHistoricos>
      */
     public function getProdutoVariacao(): Collection
     {
         return $this->produtoVariacao;
     }
 
-    public function addProdutoVariacao(PrecoHistorico $produtoVariacao): static
+    public function addProdutoVariacao(PrecoHistoricos $produtoVariacao): static
     {
         if (!$this->produtoVariacao->contains($produtoVariacao)) {
             $this->produtoVariacao->add($produtoVariacao);
@@ -163,7 +163,7 @@ class Estabelecimentos extends BaseEntity
         return $this;
     }
 
-    public function removeProdutoVariacao(PrecoHistorico $produtoVariacao): static
+    public function removeProdutoVariacao(PrecoHistoricos $produtoVariacao): static
     {
         if ($this->produtoVariacao->removeElement($produtoVariacao)) {
             // set the owning side to null (unless already changed)
