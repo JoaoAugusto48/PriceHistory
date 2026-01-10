@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\DTO\VariacaoProdutos\SaveVariacaoProdutosDTO;
 use App\Mapper\VariacaoProdutosMapper;
 use App\Service\VariacaoProdutosService;
-use SebastianBergmann\CodeUnit\Mapper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,6 +51,12 @@ final class VariacaoProdutosController extends AbstractController
         }
 
         return new JsonResponse(VariacaoProdutosMapper::toResponseDto($variacaoProduto), 200);
+    }
+
+    #[Route('/{id}/historico', name: 'app_variacao_produtos_history', methods: ['GET'])]
+    public function variacaoProdutosHistory(int $id, Request $request): JsonResponse
+    {
+        return new JsonResponse(['message' => 'Implementar'], 500);
     }
 
     /**

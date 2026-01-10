@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/api/medidas')]
-class MedidasController extends AbstractController
+final class MedidasController extends AbstractController
 {
     public function __construct(
         private MedidasService $medidasService,

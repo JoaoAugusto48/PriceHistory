@@ -17,7 +17,7 @@ class SavePrecoHistoricosDTO
         ?int $variacaoProduto_id,
         ?int $marca_id,
         ?float $valor,
-        ?string $consultado_em,
+        ?string $consultado_em = null,
         ?string $descricao = null,
         ?int $id = null
     ) {

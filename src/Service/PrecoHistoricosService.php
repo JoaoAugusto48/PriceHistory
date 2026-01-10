@@ -83,7 +83,7 @@ class PrecoHistoricosService
             throw new \InvalidArgumentException((string) $errors);
         }
 
-        $this->repository->create($precoHistorico, $flush);
+        $this->repository->save($precoHistorico, $flush);
 
         return $precoHistorico;
     }
