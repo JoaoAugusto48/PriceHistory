@@ -4,6 +4,7 @@ namespace App\Mapper;
 
 use App\DTO\Medidas\MedidasListResponseDTO;
 use App\DTO\Medidas\MedidasResponseDTO;
+use App\DTO\Medidas\MedidasResumoDTO;
 use App\Entity\Medidas;
 
 class MedidasMapper
@@ -31,6 +32,16 @@ class MedidasMapper
             $medidas->getSigla(),
             $medidas->getFatorConversao(),
             $medidas->getMedidaBase()?->getId()
+        );
+    }
+
+    public static function toResumoDto(Medidas $medidas): MedidasResumoDTO
+    {
+        return new MedidasResumoDTO(
+            $medidas->getId(),
+            $medidas->getName(),
+            $medidas->getSigla(),
+            $medidas->getFatorConversao()
         );
     }
 }

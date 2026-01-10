@@ -23,7 +23,7 @@ class PrecoHistoricos extends BaseEntity
     private ?Marcas $marca = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?string $valor = null;
+    private ?float $valor = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $descricao = null;
@@ -74,7 +74,7 @@ class PrecoHistoricos extends BaseEntity
         return $this->valor;
     }
 
-    public function setValor(string $valor): static
+    public function setValor(float $valor): static
     {
         $this->valor = $valor;
 

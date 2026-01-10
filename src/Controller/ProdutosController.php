@@ -121,4 +121,22 @@ final class ProdutosController extends AbstractController
         }
     }
 
+    /**
+     * Summary of produtoById
+     * @param int $id
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
+     */
+    #[Route('/{id}/historico', name: 'app_produtos_id', methods: ['GET'])]
+    public function produtoHistorico(int $id, Request $request): JsonResponse
+    {
+        $produto = $this->produtosService->findById($id);
+
+        if(!$produto) {
+            return new JsonResponse(['error' => 'Produto não encontrado'], 500);
+        }
+
+        return new JsonResponse(ProdutosMapper::toResponseDto($produto), 200);
+    }
+
 }

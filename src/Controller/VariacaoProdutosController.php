@@ -42,7 +42,7 @@ final class VariacaoProdutosController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return JsonResponse
      */
-    #[route('/{id}', name: 'app_variacao_produtos_id', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_variacao_produtos_id', methods: ['GET'])]
     public function variacaoProdutosById(int $id, Request $request): JsonResponse
     {
         $variacaoProduto = $this->variacaoProdutosService->findById($id);

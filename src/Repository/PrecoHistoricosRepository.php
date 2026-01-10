@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\PrecoHistoricos;
+use App\Exception\PrecoHistoricosNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,6 +15,53 @@ class PrecoHistoricosRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, PrecoHistoricos::class);
+    }
+
+    /**
+     * Summary of save
+     * @param PrecoHistoricos $entity
+     * @param bool $flush
+     * @return void
+     */
+    public function save(PrecoHistoricos $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    /**
+     * Summary of remove
+     * @param PrecoHistoricos $entity
+     * @param bool $flush
+     * @return void
+     */
+    public function remove(PrecoHistoricos $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    /**
+     * Summary of findOrFail
+     * @param int $id
+     * @throws PrecoHistoricosNotFoundException
+     * @return object
+     */
+    public function findOrFail(int $id): PrecoHistoricos
+    {
+        $precoHistorico = $this->find($id);
+
+        if(!$precoHistorico) {
+            throw new PrecoHistoricosNotFoundException();
+        }
+
+        return $precoHistorico;
     }
 
     //    /**
