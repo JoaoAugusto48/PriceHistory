@@ -2,15 +2,12 @@
 
 namespace App\DTO\PrecoHistoricos;
 
-use App\DTO\Estabelecimentos\EstabelecimentosResponseDTO;
-use App\DTO\VariacaoProdutos\VariacaoProdutosResponseDTO;
-
-class PrecoHistoricosResponseDTO
+class PrecoHistoricosListResponseDTO
 {
     public function __construct(
         public readonly ?int $id,
-        public readonly ?EstabelecimentosResponseDTO $estabelecimento,
-        public readonly ?VariacaoProdutosResponseDTO $variacaoProduto,
+        public readonly ?string $estabelecimento,
+        public readonly ?string $produto,
         public readonly ?string $marca,
         public readonly ?float $valor,
         public readonly ?string $descricao,

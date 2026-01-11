@@ -58,6 +58,16 @@ class PrecoHistoricosService
     }
 
     /**
+     * Summary of findByProdutoId
+     * @param int $produtoId
+     * @return PrecoHistoricos[]
+     */
+    public function findByProdutoId(int $produtoId): array
+    {
+        return $this->repository->findByProdutoId($produtoId);
+    }
+
+    /**
      * Summary of create
      * @param SavePrecoHistoricosDTO $dto
      * @param bool $flush

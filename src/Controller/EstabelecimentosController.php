@@ -45,13 +45,13 @@ final class EstabelecimentosController extends AbstractController
     #[Route('/{id}', name: 'app_estabelecimento_id', methods: ['GET'])]
     public function estabelecimentoById(int $id, Request $request): JsonResponse
     {
-        $estabelecimento = $this->estabelecimentosService->findById($id);
+        try {
+            $estabelecimento = $this->estabelecimentosService->findById($id);
 
-        if(!$estabelecimento) {
+            return new JsonResponse(EstabelecimentosMapper::toResponseDto($estabelecimento), 200);
+        } catch (\Throwable) {
             return new JsonResponse(['error' => 'Estabelecimento não encontrado'], 404);
         }
-
-        return new JsonResponse(EstabelecimentosMapper::toResponseDto($estabelecimento), 200);
     }
 
     /**

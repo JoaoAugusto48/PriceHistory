@@ -46,7 +46,6 @@ final class MedidasController extends AbstractController
     {
         try {
             $result = $this->medidasService->findById($id);
-
             return new JsonResponse(MedidasMapper::toResponseDto($result), 200);
         } catch (\Throwable $th) {
             return new JsonResponse(['error' => $th->getMessage()], 404);

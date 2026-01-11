@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\DTO\Produtos\SaveProdutosDTO;
+use App\Mapper\PrecoHistoricosMapper;
 use App\Mapper\ProdutosMapper;
+use App\Service\PrecoHistoricosService;
 use App\Service\ProdutosService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,6 +17,7 @@ final class ProdutosController extends AbstractController
 {
     public function __construct(
         private ProdutosService $produtosService,
+        private PrecoHistoricosService $precoHistoricosService
     ) {}
 
     /**
@@ -44,13 +47,12 @@ final class ProdutosController extends AbstractController
     #[Route('/{id}', name: 'app_produtos_id', methods: ['GET'])]
     public function produtoById(int $id, Request $request): JsonResponse
     {
-        $produto = $this->produtosService->findById($id);
-
-        if(!$produto) {
+        try {
+            $produto = $this->produtosService->findById($id);
+            return new JsonResponse(ProdutosMapper::toResponseDto($produto), 200);
+        } catch (\Throwable) {
             return new JsonResponse(['error' => 'Produto não encontrado'], 500);
         }
-
-        return new JsonResponse(ProdutosMapper::toResponseDto($produto), 200);
     }
 
     /**
@@ -122,21 +124,25 @@ final class ProdutosController extends AbstractController
     }
 
     /**
-     * Summary of produtoById
+     * Summary of produtoHistorico
      * @param int $id
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return JsonResponse
      */
-    #[Route('/{id}/historico', name: 'app_produtos_id', methods: ['GET'])]
+    #[Route('/{id}/historico', name: 'app_produtos_historico_id', methods: ['GET'])]
     public function produtoHistorico(int $id, Request $request): JsonResponse
     {
-        $produto = $this->produtosService->findById($id);
+        try {
+            $produtos = $this->precoHistoricosService->findByProdutoId($id);
+            $data = [];
 
-        if(!$produto) {
-            return new JsonResponse(['error' => 'Produto não encontrado'], 500);
+            foreach($produtos as $produto) {
+                $data[] = PrecoHistoricosMapper::toResponseListDto($produto);
+            }
+
+            return new JsonResponse($data, status: 200);
+        } catch (\Throwable $th) {
+            return new JsonResponse(['error' => $th->getMessage()], status: 500);
         }
-
-        return new JsonResponse(ProdutosMapper::toResponseDto($produto), 200);
     }
-
 }

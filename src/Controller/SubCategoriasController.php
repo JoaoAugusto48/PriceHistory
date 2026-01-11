@@ -44,13 +44,12 @@ final class SubCategoriasController extends AbstractController
     #[Route('/{id}', name: 'app_sub_categoria', methods: ['GET'])]
     public function subCategoriaById(int $id, Request $request): JsonResponse
     {
-        $subCategoria = $this->subCategoriasService->findById($id);
-
-        if(!$subCategoria) {
+        try {
+            $subCategoria = $this->subCategoriasService->findById($id);
+            return new JsonResponse(SubCategoriasMapper::toResponseDTO($subCategoria), 200);
+        } catch (\Throwable $th) {
             return new JsonResponse(['error' => 'Sub categoria não encontrada'], 404);
         }
-
-        return new JsonResponse(SubCategoriasMapper::toResponseDTO($subCategoria), 200);
     }
 
     /**

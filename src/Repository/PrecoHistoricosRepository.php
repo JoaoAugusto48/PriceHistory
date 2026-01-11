@@ -51,7 +51,7 @@ class PrecoHistoricosRepository extends ServiceEntityRepository
      * Summary of findOrFail
      * @param int $id
      * @throws PrecoHistoricosNotFoundException
-     * @return object
+     * @return PrecoHistoricos
      */
     public function findOrFail(int $id): PrecoHistoricos
     {
@@ -62,6 +62,23 @@ class PrecoHistoricosRepository extends ServiceEntityRepository
         }
 
         return $precoHistorico;
+    }
+
+    /**
+     * Summary of findByProdutoId
+     * @param int $produtoId
+     * @return PrecoHistoricos[]
+     */
+    public function findByProdutoId(int $produtoId): array
+    {
+        return $this->createQueryBuilder('ph')
+            ->innerJoin('ph.produtoVariacao', 'vp')
+            ->innerJoin('vp.produto', alias: 'p')
+            ->andWhere('p.id = :produtoId')
+            ->setParameter('produtoId', $produtoId)
+            ->orderBy('ph.consultado_em', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 
     //    /**

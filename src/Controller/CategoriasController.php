@@ -45,13 +45,12 @@ final class CategoriasController extends AbstractController
     #[Route('/{id}', name: 'app_categorias_id', methods: ['GET'])]
     public function categoriaById(int $id, Request $request): JsonResponse
     {
-        $categoria = $this->categoriasService->findById($id);
-
-        if(!$categoria) {
+        try {
+            $categoria = $this->categoriasService->findById($id);
+            return new JsonResponse(CategoriasMapper::toResponseDto($categoria), 200);
+        } catch (\Throwable) {
             return new JsonResponse(['error' => 'Categoria não encontrada'], 404);
         }
-
-        return new JsonResponse(CategoriasMapper::toResponseDto($categoria), 200);
     }
 
     /**

@@ -45,13 +45,12 @@ final class MarcasController extends AbstractController
     #[Route('/{id}', name: 'app_marcas_id', methods: ['GET'])]
     public function marcaById(int $id, Request $request): JsonResponse
     {
-        $marca = $this->marcasService->findById($id);
-
-        if(!$marca) {
+        try {
+            $marca = $this->marcasService->findById($id);
+            return new JsonResponse(MarcasMapper::toResponseDto($marca), 200);
+        } catch (\Throwable) {
             return new JsonResponse(['error' => 'Marca não encontrada'], 404);
         }
-
-        return new JsonResponse(MarcasMapper::toResponseDto($marca), 200);
     }
 
     /**

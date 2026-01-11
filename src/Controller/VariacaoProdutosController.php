@@ -44,16 +44,15 @@ final class VariacaoProdutosController extends AbstractController
     #[Route('/{id}', name: 'app_variacao_produtos_id', methods: ['GET'])]
     public function variacaoProdutosById(int $id, Request $request): JsonResponse
     {
-        $variacaoProduto = $this->variacaoProdutosService->findById($id);
-
-        if(!$variacaoProduto) {
+        try {
+            $variacaoProduto = $this->variacaoProdutosService->findById($id);
+            return new JsonResponse(VariacaoProdutosMapper::toResponseDto($variacaoProduto), 200);
+        } catch (\Throwable) {
             return new JsonResponse(['error' => 'Variação de produto não encontrada.']);
         }
-
-        return new JsonResponse(VariacaoProdutosMapper::toResponseDto($variacaoProduto), 200);
     }
 
-    #[Route('/{id}/historico', name: 'app_variacao_produtos_history', methods: ['GET'])]
+    #[Route('/{id}/historico', name: 'app_variacao_produtos_historico', methods: ['GET'])]
     public function variacaoProdutosHistory(int $id, Request $request): JsonResponse
     {
         return new JsonResponse(['message' => 'Implementar'], 500);
